@@ -12,7 +12,7 @@
 <body>
   <a class="skip" href="#review">Skip to review</a>
   <header>
-    <div><span class="wordmark">SlotLedger</span><span class="badge">Synthetic data</span></div>
+    <div><span class="wordmark">SlotLedger</span><span class="badge">__DATA_LABEL__</span></div>
     <nav aria-label="Project"><a href="https://github.com/guhanp09/slot-ledger/tree/main/src/slot_ledger/sql">SQL</a><a href="https://github.com/guhanp09/slot-ledger/blob/main/docs/methods.md">Methods</a><a href="https://github.com/guhanp09/slot-ledger/blob/main/docs/landscape.md">Product research</a></nav>
   </header>
   <main id="review">
@@ -34,7 +34,7 @@
     </div>
     <section class="panel" aria-labelledby="markets-title"><div class="section-heading"><div><h2 id="markets-title">Compare markets</h2><p class="subtle">The selected device and ad unit apply below. Each p95 is calculated from its own request distribution.</p></div></div><div class="table-scroll"><table><caption class="sr-only">Baseline and current publisher performance by market</caption><thead><tr><th scope="col">Market</th><th scope="col">Current requests</th><th scope="col">RPM, before → now</th><th scope="col">Render fill</th><th scope="col">Viewability</th><th scope="col">p95 render</th></tr></thead><tbody id="market-rows"></tbody></table></div></section>
     <section class="panel" aria-labelledby="quality-title"><h2 id="quality-title">Reconcile before recommending</h2><p id="quality-reading"></p><dl class="quality" id="quality"></dl><p class="subtle">Retries and superseded revisions are not additional impressions. Quarantined events do not remove valid requests from the denominator. Counts cover the visible input export; performance uses the configured request cohorts.</p><p><a href="decision.md">Decision memo</a> · <a href="metrics.csv">All SQL metrics</a> · <a href="mix_bridge.csv">Mix bridge</a> · <a href="data_quality.json">Quality record</a></p></section>
-    <footer><p>No live publisher data or ad serving. The fixture intentionally changes market mix and mobile delivery; it demonstrates analysis, not measured commercial improvement.</p><p>USD is an invented common reporting currency. Viewability is viewable ÷ measurable impressions; render fill is rendered opportunities ÷ ad requests. These normalized contract metrics are not a claim of identical vendor reporting.</p></footer>
+    <footer><p>__DATA_SCOPE__</p><p>All amounts use the export's declared USD reporting currency. Viewability is viewable ÷ measurable impressions; render fill is rendered opportunities ÷ ad requests. These normalized contract metrics are not a claim of identical vendor reporting.</p></footer>
   </main>
   <script id="report-data" type="application/json">__REPORT_DATA__</script>
 </body>

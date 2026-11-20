@@ -9,6 +9,7 @@ Reviewed 20 November 2026 after the initial implementation.
 - **Event semantics:** duplicate logical stage IDs are ambiguous, not additional revenue. Invalid measurability cannot validate a later viewability event. Tests exercise these cases independently of the generated demonstration.
 - **Browser labeling:** select controls now use explicit native label associations. The keyboard, filter, shareable-URL and accessibility checks use their accessible names.
 - **Artifact provenance:** deployment uploads the report bundle checked by the verification job. It does not check out a potentially different committed report in the deploy job. An independent artifact script compares the embedded browser data, SQL CSVs, reconciliations and hashes.
+- **Input provenance:** custom local exports are no longer automatically labeled synthetic. Generated fixtures require matching manifest hashes; unknown exports keep an explicit unverified-provenance label. Dataset-origin text and market counts adapt to the actual export.
 - **Experimental interpretation:** the proposed publisher/ad-unit experiment calls for cluster-aware uncertainty. Request-RPM ratios are not treated as independent binary impression outcomes.
 
 ## Claim checks
@@ -19,7 +20,7 @@ The SQL retains unfilled requests, signed micro-USD values, report cutoffs, expl
 
 ## Validation
 
-- 23 Python cases with small, hand-calculable fixtures.
+- 25 Python cases with small, hand-calculable fixtures.
 - Seven browser checks; SQL/UI/export parity, shared filters, keyboard access, automated accessibility and mobile overflow.
 - Seven reconciliation controls in the 140,000-request fixture.
 - Independent report/input hash and aggregate reconciliation checks.

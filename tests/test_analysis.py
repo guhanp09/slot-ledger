@@ -1,4 +1,5 @@
 import csv
+import hashlib
 import json
 from datetime import datetime, timedelta, timezone
 
@@ -46,6 +47,10 @@ class Export:
             "baseline_start": "2026-10-01T00:00:00Z", "current_start": "2026-10-15T00:00:00Z",
             "current_end": "2026-10-29T00:00:00Z", "as_of": "2026-11-02T00:00:00Z",
         }))
+        (self.path/"manifest.json").write_text(json.dumps({"kind": "synthetic", "files": {
+            name: hashlib.sha256((self.path/name).read_bytes()).hexdigest()
+            for name in ["requests.csv", "events.csv", "config.json"]
+        }}))
 
     def db(self, as_of=None):
         self.save()
@@ -287,3 +292,23 @@ def test_missing_support_blocks_a_standardized_recommendation(export, tmp_path):
     export.save()
     analyze(export.path, tmp_path/"out")
     assert "Hold the standardized-yield recommendation" in (tmp_path/"out/decision.md").read_text()
+
+
+def test_unknown_local_export_is_not_mislabeled_synthetic(export, tmp_path):
+    export.request("a")
+    export.impression("a")
+    export.save()
+    (export.path/"manifest.json").unlink()
+    result = analyze(export.path, tmp_path/"out")
+    assert result["data_kind"] == "unverified_local_export"
+    assert '<span class="badge">Local export</span>' in (tmp_path/"out/index.html").read_text()
+    assert "Generated example data" not in (tmp_path/"out/decision.md").read_text()
+
+
+def test_stale_synthetic_manifest_does_not_certify_modified_inputs(export, tmp_path):
+    export.request("a")
+    export.save()
+    with (export.path/"requests.csv").open("a") as handle:
+        handle.write("b,2026-10-02T12:00:00Z,US,mobile,article\n")
+    with pytest.raises(ValueError, match="manifest hashes"):
+        analyze(export.path, tmp_path/"out")

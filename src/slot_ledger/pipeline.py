@@ -141,6 +141,13 @@ def write_csv(path, data):
 
 def analyze(source: Path, output: Path, as_of=None):
     started = time.perf_counter()
+    source_hashes = {name: hashlib.sha256((source / name).read_bytes()).hexdigest()
+                     for name in ["requests.csv", "events.csv", "config.json"]}
+    manifest_path = source / "manifest.json"
+    manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+    data_kind = "synthetic" if manifest.get("kind") == "synthetic" else "unverified_local_export"
+    if data_kind == "synthetic" and manifest.get("files") != source_hashes:
+        raise ValueError("Synthetic manifest hashes do not match the input export")
     with open_database(source, as_of=as_of) as con:
         timings = materialize(con)
         if con.execute("SELECT COUNT(*) FROM request_facts").fetchone()[0] == 0:
@@ -166,17 +173,15 @@ def analyze(source: Path, output: Path, as_of=None):
         ))
         mature = config["as_of"] >= config["current_end"] + timedelta(hours=72)
         summary = {
-            "data_kind": "synthetic", "currency": "USD", "timezone": "UTC",
+            "data_kind": data_kind, "currency": "USD", "timezone": "UTC",
             "config": config, "mature_comparison": mature,
             "maturity_policy": "72 hours after the current window closes; a modeling assumption, not a universal SLA.",
             "requests": quality["request_rows"], "markets": sorted({r["market"] for r in data["metrics"] if r["market"] != "*"}),
             "overall_bridge": overall, "largest_fill_decline": ranked[0] if ranked else None,
             "controls": controls, "quality": quality,
             "sql_seconds": timings, "pipeline_seconds": round(time.perf_counter() - started, 3),
-            "duckdb": duckdb.__version__, "input_sha256": {},
+            "duckdb": duckdb.__version__, "input_sha256": source_hashes,
         }
-        for name in ["requests.csv", "events.csv", "config.json"]:
-            summary["input_sha256"][name] = hashlib.sha256((source / name).read_bytes()).hexdigest()
         data["summary"] = summary
         for name, value in [("summary.json", summary), ("data_quality.json", quality)]:
             (output / name).write_text(json.dumps(value, default=json_default, indent=2, allow_nan=False) + "\n")
@@ -193,6 +198,14 @@ def create_report(output, data):
     # A literal </script> in a future dimension value must not terminate the JSON container.
     payload = payload.replace("<", "\\u003c")
     html = (PACKAGE / "web" / "index.html").read_text().replace("__REPORT_DATA__", payload)
+    synthetic = data["summary"]["data_kind"] == "synthetic"
+    html = html.replace("__DATA_LABEL__", "Synthetic data" if synthetic else "Local export")
+    scope = (
+        "No live publisher data or ad serving. The fixture intentionally changes market mix and mobile delivery; it demonstrates analysis, not measured commercial improvement."
+        if synthetic else
+        "Locally supplied export; source provenance is unverified by this analysis. Results are descriptive and do not establish causal improvements. No ad serving or tracking is performed."
+    )
+    html = html.replace("__DATA_SCOPE__", scope)
     (output / "index.html").write_text(html)
     for name in ["app.js", "style.css"]:
         shutil.copy2(PACKAGE / "web" / name, output / name)

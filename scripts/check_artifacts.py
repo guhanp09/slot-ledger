@@ -12,6 +12,7 @@ summary = json.loads((reports / "summary.json").read_text())
 html = (reports / "index.html").read_text()
 payload = json.loads(re.search(r'<script id="report-data" type="application/json">(.*?)</script>', html, re.S)[1])
 assert "__REPORT_DATA__" not in html
+assert "__DATA_LABEL__" not in html and "__DATA_SCOPE__" not in html
 assert payload["summary"] == summary
 assert all(value == 0 for value in summary["controls"].values())
 with (reports / "metrics.csv").open() as handle:

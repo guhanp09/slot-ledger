@@ -22,15 +22,15 @@
     "device": "*",
     "ad_unit": "*",
     "baseline_rpm": 1.1682570285714287,
-    "current_rpm": 1.7244078428571428,
+    "current_rpm": 1.7244078428571425,
     "baseline_coverage": 1.0,
     "current_coverage": 1.0,
     "complete_support": true,
-    "raw_change": 0.5561508142857141,
+    "raw_change": 0.5561508142857139,
     "within_change": -0.1471318804142431,
-    "mix_change": 0.7032826946999571,
+    "mix_change": 0.7032826946999575,
     "fixed_mix_current_rpm": 1.0211251481571855,
-    "residual": 1.1102230246251565e-16
+    "residual": -5.551115123125783e-16
   },
   "largest_fill_decline": {
     "market": "IN",
@@ -81,12 +81,12 @@
     "retry_or_superseded_deliveries": 8659
   },
   "sql_seconds": {
-    "01_events.sql": 0.204,
-    "02_metrics.sql": 0.1187,
-    "03_mix_bridge.sql": 0.0099,
-    "04_diagnostics.sql": 0.0074
+    "01_events.sql": 0.2152,
+    "02_metrics.sql": 0.1169,
+    "03_mix_bridge.sql": 0.0088,
+    "04_diagnostics.sql": 0.0087
   },
-  "pipeline_seconds": 1.008,
+  "pipeline_seconds": 1.114,
   "duckdb": "2.0.0",
   "input_sha256": {
     "requests.csv": "67b1d039a1154ea236f06bdb485dd781c16b1a718ec9270f49aa2cbf37f87c40",

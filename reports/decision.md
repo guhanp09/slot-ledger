@@ -8,7 +8,7 @@ Investigate the IN/mobile/footer rendering path and validate a bounded change in
 
 ## Evidence
 
-Observed request RPM moves from $1.168 to $1.724. Holding the original country/device/ad-unit mix fixed gives $1.021. The within-stratum change is $-0.147 per 1,000 requests, and the traffic-mix contribution is $+0.703; the bridge residual is 1.1e-16.
+Observed request RPM moves from $1.168 to $1.724. Holding the original country/device/ad-unit mix fixed gives $1.021. The within-stratum change is $-0.147 per 1,000 requests, and the traffic-mix contribution is $+0.703; the bridge residual is -5.6e-16.
 
 The weakest paired render-fill change is IN/mobile/footer: 71.0% to 49.4%, with p95 request-to-render latency moving from 462 to 969 ms.
 
@@ -32,13 +32,12 @@ These are proposed stakeholder perspectives, not records of meetings or collabor
 Randomize eligible publisher/ad-unit clusters with a predeclared request-RPM primary metric. Analyze
 revenue/request ratios with cluster-aware uncertainty, not a binomial interval on individual impressions.
 Guard render fill, measurable-impression viewability and request-to-render latency. Set the minimum
-number of clusters, fixed horizon, allocation check and rollback bounds before observing results. The fixture is observational
-and intentionally generated: it does not estimate the causal effect of a price, timeout or template change.
+number of clusters, fixed horizon, allocation check and rollback bounds before observing results. This descriptive
+comparison does not establish the causal effect of a price, timeout or template change.
 
 ## Scope
 
-One normalized ad opportunity per request, four fictional market cohorts, display inventory and USD.
-No real publisher logs, actual ad-server integration, field experiment, advertiser ROI or measured
-business uplift. Country/device/ad-unit standardization cannot remove unobserved confounding.
+One normalized ad opportunity per request, 4 market labels, display inventory and USD.
+Generated example data. No real publisher logs, actual ad-server integration, field experiment, advertiser ROI or measured business uplift. Country/device/ad-unit standardization cannot remove unobserved confounding.
 The 72-hour reporting maturity rule is assumed. Validate actual logging, billing and settlement SLAs
 before adapting this model to operational decisions.

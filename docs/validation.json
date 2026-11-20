@@ -1,20 +1,21 @@
 {
   "review_date": "2026-11-20",
-  "executed_at_utc": "2026-11-20T10:58:41.071758+00:00",
+  "executed_at_utc": "2026-11-20T11:08:17.241312+00:00",
   "python": "3.12.7",
   "duckdb": "2.0.0",
   "python_tests": {
-    "passed": 23,
+    "passed": 25,
     "command": "python -m pytest -q"
   },
   "browser_tests": {
     "passed": 7,
     "browser": "Google Chrome, installed channel",
-    "command": "SLOT_LEDGER_BROWSER=chrome npm test"
+    "command": "SLOT_LEDGER_BROWSER=chrome npm test",
+    "version": "158.0.8127.36"
   },
   "lint": "ruff check src tests scripts: passed",
   "javascript": "node --check src/slot_ledger/web/app.js: passed",
-  "artifact_checks": "python scripts/check_artifacts.py: passed",
+  "artifact_checks": "python scripts/check_artifacts.py: passed after provenance corrections",
   "dataset": {
     "requests": 140000,
     "raw_deliveries": 504310,

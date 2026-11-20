@@ -2,6 +2,13 @@ def decision_memo(summary):
     b = summary["overall_bridge"]
     worst = summary["largest_fill_decline"]
     maturity = "closed" if summary["mature_comparison"] else "preliminary"
+    synthetic = summary["data_kind"] == "synthetic"
+    label = "Synthetic fixture" if synthetic else "Local export; unverified provenance"
+    origin = (
+        "Generated example data. No real publisher logs, actual ad-server integration, field experiment, advertiser ROI or measured business uplift."
+        if synthetic else
+        "A locally supplied export; its source has not been verified by this project. No ad-server integration, field experiment, advertiser ROI or causal business uplift is established."
+    )
     bridge = (
         f"Observed request RPM moves from ${b['baseline_rpm']:.3f} to ${b['current_rpm']:.3f}. "
         f"Holding the original country/device/ad-unit mix fixed gives ${b['fixed_mix_current_rpm']:.3f}. "
@@ -31,7 +38,7 @@ def decision_memo(summary):
         decision = "Continue monitoring: no paired segment crosses the demo's three-percentage-point fill-decline triage threshold. No rendering fix is prescribed from these results."
     return f"""# Publisher yield review
 
-**Synthetic fixture · USD · UTC · {summary['requests']:,} requests · {maturity} comparison**
+**{label} · USD · UTC · {summary['requests']:,} requests · {maturity} comparison**
 
 ## Decision
 
@@ -63,14 +70,13 @@ These are proposed stakeholder perspectives, not records of meetings or collabor
 Randomize eligible publisher/ad-unit clusters with a predeclared request-RPM primary metric. Analyze
 revenue/request ratios with cluster-aware uncertainty, not a binomial interval on individual impressions.
 Guard render fill, measurable-impression viewability and request-to-render latency. Set the minimum
-number of clusters, fixed horizon, allocation check and rollback bounds before observing results. The fixture is observational
-and intentionally generated: it does not estimate the causal effect of a price, timeout or template change.
+number of clusters, fixed horizon, allocation check and rollback bounds before observing results. This descriptive
+comparison does not establish the causal effect of a price, timeout or template change.
 
 ## Scope
 
-One normalized ad opportunity per request, four fictional market cohorts, display inventory and USD.
-No real publisher logs, actual ad-server integration, field experiment, advertiser ROI or measured
-business uplift. Country/device/ad-unit standardization cannot remove unobserved confounding.
+One normalized ad opportunity per request, {len(summary['markets'])} market labels, display inventory and USD.
+{origin} Country/device/ad-unit standardization cannot remove unobserved confounding.
 The 72-hour reporting maturity rule is assumed. Validate actual logging, billing and settlement SLAs
 before adapting this model to operational decisions.
 """

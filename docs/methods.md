@@ -8,6 +8,8 @@ One row in `requests.csv` is one display-ad opportunity. Required fields are `re
 
 The fixture uses 1–14 and 15–28 October 2026, as of 2 November. These dates belong to generated examples, not historical publisher observations.
 
+Generated fixtures include a synthetic manifest with input hashes. The label is used only when those hashes match. An export without that declaration is labeled **Local export; unverified provenance**, not automatically synthetic. A matching declaration records the supplied provenance; it is not independent authentication of a data owner.
+
 ## Event identity and revisions
 
 `events.csv` has `delivery_id`, `event_id`, `request_id`, `event_type`, `event_at`, `ingested_at`, `revision` and signed integer `revenue_micros`. Events are normalized `bid`, `win`, `render`, `measurable`, `viewable`, `click` or `adjustment` observations.
