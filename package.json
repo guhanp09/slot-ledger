@@ -1,0 +1,7 @@
+{
+  "name": "slot-ledger-review",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {"test": "playwright test"},
+  "devDependencies": {"@axe-core/playwright": "4.14.0", "@playwright/test": "1.65.0"}
+}

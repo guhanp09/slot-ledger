@@ -1,0 +1,96 @@
+{
+  "data_kind": "synthetic",
+  "currency": "USD",
+  "timezone": "UTC",
+  "config": {
+    "baseline_start": "2026-10-01T00:00:00+00:00",
+    "current_start": "2026-10-15T00:00:00+00:00",
+    "current_end": "2026-10-29T00:00:00+00:00",
+    "as_of": "2026-11-02T00:00:00+00:00"
+  },
+  "mature_comparison": true,
+  "maturity_policy": "72 hours after the current window closes; a modeling assumption, not a universal SLA.",
+  "requests": 140000,
+  "markets": [
+    "BR",
+    "GB",
+    "IN",
+    "US"
+  ],
+  "overall_bridge": {
+    "market": "*",
+    "device": "*",
+    "ad_unit": "*",
+    "baseline_rpm": 1.1682570285714287,
+    "current_rpm": 1.7244078428571428,
+    "baseline_coverage": 1.0,
+    "current_coverage": 1.0,
+    "complete_support": true,
+    "raw_change": 0.5561508142857141,
+    "within_change": -0.1471318804142431,
+    "mix_change": 0.7032826946999571,
+    "fixed_mix_current_rpm": 1.0211251481571855,
+    "residual": 1.1102230246251565e-16
+  },
+  "largest_fill_decline": {
+    "market": "IN",
+    "device": "mobile",
+    "ad_unit": "footer",
+    "baseline_fill": 0.7096208983752788,
+    "current_fill": 0.49429657794676807,
+    "baseline_p95": 462.0,
+    "current_p95": 969.0,
+    "baseline_viewability": 0.4133709981167608,
+    "current_viewability": 0.2922661870503597,
+    "current_requests": 2367,
+    "fill_change": -0.21532432042851068,
+    "p95_change_ms": 507.0,
+    "viewability_change": -0.12110481106640109,
+    "fill_decline_rank": 1
+  },
+  "controls": {
+    "one_fact_per_request": 0,
+    "funnel_order": 0,
+    "no_negative_net_request_revenue": 0,
+    "event_partition": 0,
+    "revenue_reconciliation": 0,
+    "cube_reconciliation": 0,
+    "bridge_identity": 0
+  },
+  "quality": {
+    "raw_deliveries": 504310,
+    "visible_deliveries": 504310,
+    "logical_events": 495651,
+    "accepted_events": 495641,
+    "quarantined_events": 10,
+    "request_rows": 140000,
+    "reasons": [
+      {
+        "exclusion_reason": "before_request",
+        "events": 1
+      },
+      {
+        "exclusion_reason": "unknown_event_type",
+        "events": 1
+      },
+      {
+        "exclusion_reason": "unknown_request",
+        "events": 8
+      }
+    ],
+    "retry_or_superseded_deliveries": 8659
+  },
+  "sql_seconds": {
+    "01_events.sql": 0.204,
+    "02_metrics.sql": 0.1187,
+    "03_mix_bridge.sql": 0.0099,
+    "04_diagnostics.sql": 0.0074
+  },
+  "pipeline_seconds": 1.008,
+  "duckdb": "2.0.0",
+  "input_sha256": {
+    "requests.csv": "67b1d039a1154ea236f06bdb485dd781c16b1a718ec9270f49aa2cbf37f87c40",
+    "events.csv": "8a403991c6231a3d3539a91a52858a79fc020a06f6417c4842fab7ae460f2f3c",
+    "config.json": "3e2b73f1d7b631636dcf977d09a4d4e3e5f36c23ef09cf3d6b1f86edbe9e0bec"
+  }
+}

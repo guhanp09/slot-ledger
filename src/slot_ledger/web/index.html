@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="An auditable publisher yield review with SQL-derived market comparisons and traffic-mix decomposition.">
+  <link rel="icon" href="data:,">
+  <title>SlotLedger · Publisher yield review</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#review">Skip to review</a>
+  <header>
+    <div><span class="wordmark">SlotLedger</span><span class="badge">Synthetic data</span></div>
+    <nav aria-label="Project"><a href="https://github.com/guhanp09/slot-ledger/tree/main/src/slot_ledger/sql">SQL</a><a href="https://github.com/guhanp09/slot-ledger/blob/main/docs/methods.md">Methods</a><a href="https://github.com/guhanp09/slot-ledger/blob/main/docs/landscape.md">Product research</a></nav>
+  </header>
+  <main id="review">
+    <div class="heading"><p class="eyebrow">Publisher operations</p><h1>What is driving yield?</h1><p>Separate changes in delivery from changes in the traffic you receive.</p></div>
+    <p class="context" id="context"></p>
+    <p class="notice" id="maturity" hidden></p>
+    <form class="filters" aria-label="Report filters">
+      <div class="field"><label for="market">Market</label><select id="market"><option value="*">All markets</option></select></div>
+      <div class="field"><label for="device">Device</label><select id="device"><option value="*">All devices</option><option value="desktop">Desktop</option><option value="mobile">Mobile</option></select></div>
+      <div class="field"><label for="unit">Ad unit</label><select id="unit"><option value="*">All ad units</option><option value="article">Article</option><option value="footer">Footer</option></select></div>
+      <button id="reset" type="button" class="secondary">Reset</button>
+      <button id="download" type="button">Export selection</button>
+    </form>
+    <p class="sr-only" id="filter-status" aria-live="polite"></p>
+    <section aria-label="Performance measures" id="cards" class="cards"></section>
+    <div class="analysis-grid">
+      <section class="panel" aria-labelledby="mix-title"><h2 id="mix-title">Keep the traffic mix honest</h2><p class="subtle">USD per 1,000 requests. Same country × device × ad-unit weights as the baseline.</p><div id="mix-values" class="mix-values"></div><p id="mix-reading" class="reading"></p><details><summary>How to read this</summary><p>The bridge first changes segment yield at baseline traffic weights, then changes traffic weights at current yield. It is descriptive and order-dependent. Incomplete common support withholds the standardized result. No causal effect is inferred.</p></details></section>
+      <section class="panel" aria-labelledby="trend-title"><h2 id="trend-title">Trailing seven-day request RPM</h2><div id="chart"></div><p class="subtle">Ratio of seven-day revenue and request sums, not an average of daily rates. The first six days are withheld. UTC dates.</p></section>
+    </div>
+    <section class="panel" aria-labelledby="markets-title"><div class="section-heading"><div><h2 id="markets-title">Compare markets</h2><p class="subtle">The selected device and ad unit apply below. Each p95 is calculated from its own request distribution.</p></div></div><div class="table-scroll"><table><caption class="sr-only">Baseline and current publisher performance by market</caption><thead><tr><th scope="col">Market</th><th scope="col">Current requests</th><th scope="col">RPM, before → now</th><th scope="col">Render fill</th><th scope="col">Viewability</th><th scope="col">p95 render</th></tr></thead><tbody id="market-rows"></tbody></table></div></section>
+    <section class="panel" aria-labelledby="quality-title"><h2 id="quality-title">Reconcile before recommending</h2><p id="quality-reading"></p><dl class="quality" id="quality"></dl><p class="subtle">Retries and superseded revisions are not additional impressions. Quarantined events do not remove valid requests from the denominator. Counts cover the visible input export; performance uses the configured request cohorts.</p><p><a href="decision.md">Decision memo</a> · <a href="metrics.csv">All SQL metrics</a> · <a href="mix_bridge.csv">Mix bridge</a> · <a href="data_quality.json">Quality record</a></p></section>
+    <footer><p>No live publisher data or ad serving. The fixture intentionally changes market mix and mobile delivery; it demonstrates analysis, not measured commercial improvement.</p><p>USD is an invented common reporting currency. Viewability is viewable ÷ measurable impressions; render fill is rendered opportunities ÷ ad requests. These normalized contract metrics are not a claim of identical vendor reporting.</p></footer>
+  </main>
+  <script id="report-data" type="application/json">__REPORT_DATA__</script>
+</body>
+</html>

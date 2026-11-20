@@ -1,0 +1,23 @@
+{
+  "raw_deliveries": 504310,
+  "visible_deliveries": 504310,
+  "logical_events": 495651,
+  "accepted_events": 495641,
+  "quarantined_events": 10,
+  "request_rows": 140000,
+  "reasons": [
+    {
+      "exclusion_reason": "before_request",
+      "events": 1
+    },
+    {
+      "exclusion_reason": "unknown_event_type",
+      "events": 1
+    },
+    {
+      "exclusion_reason": "unknown_request",
+      "events": 8
+    }
+  ],
+  "retry_or_superseded_deliveries": 8659
+}

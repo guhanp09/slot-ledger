@@ -1,0 +1,33 @@
+{
+  "review_date": "2026-11-20",
+  "executed_at_utc": "2026-11-20T10:58:41.071758+00:00",
+  "python": "3.12.7",
+  "duckdb": "2.0.0",
+  "python_tests": {
+    "passed": 23,
+    "command": "python -m pytest -q"
+  },
+  "browser_tests": {
+    "passed": 7,
+    "browser": "Google Chrome, installed channel",
+    "command": "SLOT_LEDGER_BROWSER=chrome npm test"
+  },
+  "lint": "ruff check src tests scripts: passed",
+  "javascript": "node --check src/slot_ledger/web/app.js: passed",
+  "artifact_checks": "python scripts/check_artifacts.py: passed",
+  "dataset": {
+    "requests": 140000,
+    "raw_deliveries": 504310,
+    "quarantined_events": 10,
+    "controls": {
+      "one_fact_per_request": 0,
+      "funnel_order": 0,
+      "no_negative_net_request_revenue": 0,
+      "event_partition": 0,
+      "revenue_reconciliation": 0,
+      "cube_reconciliation": 0,
+      "bridge_identity": 0
+    }
+  },
+  "scope": "Synthetic fixture and local browser validation. Hosted Chromium execution is recorded separately in GitHub Actions."
+}
